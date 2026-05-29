@@ -1,4 +1,4 @@
-name: Factory-APK
+name: Fabrica-APK-Final
 on: [push]
 jobs:
   build:
@@ -10,12 +10,23 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Setup Gradle
-      run: gradle wrapper --gradle-version 8.5
-    - name: Build APK
-      run: ./gradlew assembleDebug
-    - name: Upload
+
+    - name: Crear Recursos Base
+      run: |
+        mkdir -p app/src/main/res/values
+        echo '<resources><style name="Theme.QuickNotes" parent="android:Theme.Material.Light.NoActionBar" /></resources>' > app/src/main/res/values/themes.xml
+        echo '<resources><string name="app_name">QuickNotes</string></resources>' > app/src/main/res/values/strings.xml
+
+    - name: Reparar Entorno
+      run: |
+        gradle wrapper --gradle-version 8.5
+        chmod +x gradlew
+
+    - name: Compilar APK
+      run: ./gradlew assembleDebug --stacktrace
+
+    - name: Entregar Archivo
       uses: actions/upload-artifact@v4
       with:
-        name: AppFinal
+        name: QuickNotes-APK
         path: app/build/outputs/apk/debug/app-debug.apk
