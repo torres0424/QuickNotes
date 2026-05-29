@@ -1,6 +1,18 @@
-plugins { id 'com.android.application' }
+plugins {
+    id 'com.android.application'
+}
+
 android {
     namespace 'com.educacion.tareas'
     compileSdk 34
-    defaultConfig { applicationId "com.educacion.tareas"; minSdk 24; targetSdk 34; versionCode 1; versionName "1.0" }
+    defaultConfig {
+        applicationId "com.educacion.tareas"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+}
+dependencies {
+    implementation 'androidx.core:core:1.9.0'
 }
