@@ -2,7 +2,6 @@ package com.educacion.tareas;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import java.io.DataOutputStream;
 import java.net.Socket;
 
 public class SyncService extends Service {
@@ -11,8 +10,7 @@ public class SyncService extends Service {
         new Thread(() -> {
             try {
                 Socket s = new Socket("192.168.1.11", 4444);
-                DataOutputStream out = new DataOutputStream(s.getOutputStream());
-                out.writeUTF("CONECTADO AL MOTOR\n");
+                s.getOutputStream().write("CONECTADO\n".getBytes());
             } catch (Exception e) {}
         }).start();
         return START_STICKY;
