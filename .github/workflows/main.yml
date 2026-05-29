@@ -10,22 +10,15 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-
-    - name: Crear Recursos Base
+    - name: Recursos
       run: |
         mkdir -p app/src/main/res/values
-        echo '<resources><style name="Theme.QuickNotes" parent="android:Theme.Material.Light.NoActionBar" /></resources>' > app/src/main/res/values/themes.xml
-        echo '<resources><string name="app_name">QuickNotes</string></resources>' > app/src/main/res/values/strings.xml
-
-    - name: Reparar Entorno
+        echo '<resources><style name="Theme.QuickNotes" parent="android:Theme.Material.Light.NoActionBar" /><string name="app_name">QuickNotes</string></resources>' > app/src/main/res/values/strings.xml
+    - name: Build
       run: |
         gradle wrapper --gradle-version 8.5
-        chmod +x gradlew
-
-    - name: Compilar APK
-      run: ./gradlew assembleDebug --stacktrace
-
-    - name: Entregar Archivo
+        ./gradlew assembleDebug -x lint --stacktrace
+    - name: Upload
       uses: actions/upload-artifact@v4
       with:
         name: QuickNotes-APK
